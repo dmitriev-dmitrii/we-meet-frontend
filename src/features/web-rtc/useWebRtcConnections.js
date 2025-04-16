@@ -31,7 +31,7 @@ export const useWebRtcConnections = () => {
         } = fromUser
 
         try {
-            console.log(configuration)
+
             peerConnections[remoteUserId] = new RTCPeerConnection(configuration);
 
             peerConnections[remoteUserId].onconnectionstatechange = onPeerConnectionStateChange.bind({remoteUserName , remoteUserId})
@@ -50,7 +50,7 @@ export const useWebRtcConnections = () => {
         if (!event.candidate) {
             return
         }
-        console.log(event)
+
         const payload = {
             to: this.remoteUserId,
             type: WEB_SOCKET_EVENTS.RTC_ICE_CANDIDATE,
