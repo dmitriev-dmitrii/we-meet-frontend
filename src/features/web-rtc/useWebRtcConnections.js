@@ -31,9 +31,7 @@ export const useWebRtcConnections = createSharedComposable(() => {
         try {
 
             peerConnections[remoteUserId] = new RTCPeerConnection({
-                // iceServers: webRtcStore.iceServers,
-                // iceTransportPolicy: "all", // Разрешить и TCP и UDP
-                // iceCandidatePoolSize: 1 // Для локального тестирования
+                iceServers: webRtcStore.iceServers,
             });
             dispatchUpdatePeerStatus(remoteUserId)
 
