@@ -26,7 +26,7 @@ app.mount('#app')
 // import  "@/components/appSteps/meetStep/mediaStreams/local-media-stream.component.html";
 // import  "@/components/appSteps/meetStep/mediaStreams/remote-media-stream.component.html";
 //
-// import { useWebSocket } from "./features/useWebSocket.js";
+// import { useWebSocket } from "./features/useWebSocket.ts";
 // import {useWebRtcConnections} from "./features/web-rtc/useWebRtcConnections.js";
 //
 // import {

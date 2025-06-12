@@ -1,14 +1,15 @@
 import {meetApi} from "@/api/meetApi.js";
 import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels.js";
-import {localUserStore} from "@/store/localUserStore.js";
-import {useWebSocket} from "@/features/useWebSocket.js";
+import {localUserStore, useLocalUserStore} from "@/store/localUserStore.js";
+
 import {useWebRtcMediaStreams} from "@/features/web-rtc/useWebRtcMediaStreams.js";
 import {useWebRtcConnections} from "@/features/web-rtc/useWebRtcConnections.js";
 import {peerConnections} from "@/store/webRtcStore.js";
+import {reactive, unref} from "vue";
 
 const {sendMeOffer} = useWebRtcConnections()
 
-const {closeWebSocket, connectToWebSocket} = useWebSocket()
+// const {closeWebSocket, connectToWebSocket} = useWebSocket()
 
 const {
     closeDataChanel
@@ -49,7 +50,7 @@ const joinMeet = async () => {
 
         const {data} = await meetApi.joinMeetRequest({meetId, userId})
 
-        await connectToWebSocket()
+        // await connectToWebSocket()
         await sendMeOffer()
 
         const currentUrl = new URL(window.location.href);
@@ -78,7 +79,7 @@ const leaveMeet = () => {
             removeUserFromMeet(remoteUserId)
         })
 
-        closeWebSocket()
+        // closeWebSocket()
     } catch (e) {
         alert('leaveMeet err' + e.message)
         throw e
@@ -99,4 +100,75 @@ export const meetStore = {
     leaveMeet,
 }
 
+const currentMeet = reactive({
+    meetId: '',
+    ownerUserId: ''
+    //TODO readonly export
+})
 
+export const useCurrentMeetStore = () => {
+
+    const {
+        localUserAuth,
+        localUser
+    } = useLocalUserStore()
+
+    const createMeet = async () => {
+        try {
+
+            await localUserAuth()
+
+            const payload = {
+                ...unref(localUser),
+            }
+
+            const {data} = await meetApi.createMeet(payload)
+            currentMeet.meetId = data.meetId
+            currentMeet.ownerUserId = data.ownerUserId
+
+        } catch (e) {
+            alert('createMeet err' + e.message)
+            throw e
+        }
+    }
+    const findMeetById = async ({meetId}) => {
+        try {
+
+            const {data} = await meetApi.getMeetById({meetId})
+            currentMeet.meetId = data.meetId
+            currentMeet.ownerUserId = data.ownerUserId
+
+        } catch (e) {
+            alert('findMeetById err' + e.message)
+            throw e
+        }
+    }
+
+
+    const joinMeet = async () => {
+        try {
+
+            await localUserAuth()
+
+            const {meetId} = unref(currentMeet)
+            const {userId, userName} = unref(localUser)
+
+            const {data} = await meetApi.joinMeetRequest({meetId, userId , userName})
+
+
+            await sendMeOffer()
+
+        } catch (e) {
+            alert('joinMeet err' + e.message)
+            throw e
+        }
+
+    }
+
+    return {
+        joinMeet,
+        findMeetById,
+        currentMeet,
+        createMeet
+    }
+}

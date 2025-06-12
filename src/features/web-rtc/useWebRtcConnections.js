@@ -1,18 +1,20 @@
-import {useWebSocket} from "../useWebSocket.js";
+import {useWebSocket} from "../useWebSocket";
 import {peerConnections} from "@/store/webRtcStore.js";
 import {useWebRtcDataChannels} from "./useWebRtcDataChannels.js";
 import {useWebRtcMediaStreams} from "./useWebRtcMediaStreams.js";
-import {localUserStore} from "@/store/localUserStore.js";
+import { useLocalUserStore} from "@/store/localUserStore.js";
 import {useEventBus} from "@/features/useEventBus.js";
 import {BUS_EVENTS, WEB_SOCKET_EVENTS} from "@/constants/constants.js";
-import {createSharedComposable} from "@/utils/sharedComposable.js";
+import {unref} from "vue";
 
-export const useWebRtcConnections = createSharedComposable(() => {
+
+export const useWebRtcConnections = () => {
 
     const {setupDataChanelEvents} = useWebRtcDataChannels()
     const {setupMediaStreamToPeer} = useWebRtcMediaStreams()
     const {dispatchEvent} = useEventBus()
     const {sendWebSocketMessage} = useWebSocket()
+    const {localUser} = useLocalUserStore()
 
     const dispatchUpdatePeerStatus = (remoteUserId) => {
 
@@ -105,7 +107,9 @@ export const useWebRtcConnections = createSharedComposable(() => {
 
             await createPeerConnection(fromUser)
 
-            const channel = await peerConnections[remoteUserId].createDataChannel(localUserStore.userId);
+            const {userId} = unref(localUser)
+
+            const channel = await peerConnections[remoteUserId].createDataChannel(userId);
 
             setupDataChanelEvents({fromUser, channel})
 
@@ -221,7 +225,7 @@ export const useWebRtcConnections = createSharedComposable(() => {
         setupPeerAnswer,
         closePeerConnection,
     }
-})
+}
 
 
 

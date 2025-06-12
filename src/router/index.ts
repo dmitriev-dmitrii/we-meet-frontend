@@ -7,10 +7,15 @@ export const routes = [
             component: HomeView,
         },
         {
-            path: '/meet',
+            path: '/meet/:meetId',
             name: 'MeetView',
             component: () => import('../views/MeetView.vue'),
         },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'ErrorView',
+            component: () => import('../views/ErrorView.vue'),
+        }
     ]
 
 

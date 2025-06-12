@@ -1,12 +1,13 @@
 <template>
-
+  ErrorView
+  <RouterLink to="/"/>
 </template>
 
 <script>
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "ErrorPage",
+  name: "ErrorView",
   setup() {
 
     return {}

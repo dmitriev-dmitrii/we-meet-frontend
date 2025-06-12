@@ -1,6 +1,22 @@
-<script setup lang="ts">
+<script  lang="ts">
+import {defineComponent, onMounted, unref} from "vue";
+import {useWebSocket} from './features/useWebSocket'
 
+export default defineComponent({
+  name: "Meet",
+  components: {
+
+  },
+  setup() {
+    const {connectToWebSocket} = useWebSocket()
+    connectToWebSocket()
+    return {
+
+    }
+  }
+})
 </script>
+
 
 <template>
   <div>

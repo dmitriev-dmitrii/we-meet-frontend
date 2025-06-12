@@ -1,9 +1,21 @@
 <template>
-  JoinMeetForm
+
+  <form @submit.prevent="onSubmitForm ">
+
+    <label>
+      meetPassword
+      <input v-model="meetPassword">
+    </label>
+
+    <button type="submit"> join meet </button>
+
+  </form>
+
 </template>
 
 <script>
 import {defineComponent, ref, unref} from 'vue'
+import {useCurrentMeetStore} from "@/store/meetStore.js";
 
 
 export default defineComponent({
@@ -12,47 +24,28 @@ export default defineComponent({
 
     const meetPassword = ref('')
     const isLoading = ref(false)
+    const {joinMeet} = useCurrentMeetStore()
+    const onSubmitForm = async () => {
 
-    // const joinMeet = async () => {
-    //   try {
-    //     isLoading.value = false
-    //     await meetStore.joinMeet()
-    //   } catch (e) {
-    //     console.error('create meet form joinMeet', e)
-    //   } finally {
-    //     isLoading.value = false
-    //   }
-    // }
+      try {
+        isLoading.value = true
 
-    // const copyMeetHref = async () => {
-    //   console.log('copyMeetHref', window.location.href)
-    // }
-    //
-    // const onActionBarClick = async (e) => {
-    //
-    //   const eventTarget = e.target
-    //   e.stopPropagation()
-    //   const {actionType} = eventTarget.dataset
-    //
-    //   if (!Object.values(CREATE_MEET_FORM_ACTION_BAR_MAP).includes(actionType)) {
-    //     return
-    //   }
-    //
-    //   if (actionType === CREATE_MEET_FORM_ACTION_BAR_MAP.CREATE_MEET) {
-    //     await createMeet()
-    //     return;
-    //   }
-    //
-    //   if (actionType === CREATE_MEET_FORM_ACTION_BAR_MAP.COPY_MEET_LINK) {
-    //     await copyMeetHref()
-    //   }
-    //
-    //   if (actionType === CREATE_MEET_FORM_ACTION_BAR_MAP.GO_TO_MEET) {
-    //     await joinMeet()
-    //   }
-    // }
+        await joinMeet()
 
-    return {}
+      } catch (e) {
+
+        console.log(e)
+      } finally {
+
+        isLoading.value = false
+
+      }
+    }
+
+    return {
+      onSubmitForm,
+      meetPassword
+    }
   }
 })
 </script>

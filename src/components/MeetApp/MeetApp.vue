@@ -1,12 +1,16 @@
 <template>
-  LocalMedaStream
+
+  <LocalMedaStream/>
+
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue'
+import LocalMedaStream from "./LocalMedaStream.vue";
 
 export default defineComponent({
-  name: "LocalMedaStream",
+  name: "MeetApp",
+  components: {LocalMedaStream},
   setup() {
 
     return {}

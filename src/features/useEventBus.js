@@ -33,7 +33,6 @@ export const useEventBus =  createSharedComposable(() => {
 
     const eventBusHandle = ({detail = {}, type: eventKey }) => {
 
-
         if (!CALLBACKS_MAP.get(eventKey).size) {
             return
         }
