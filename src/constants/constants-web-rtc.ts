@@ -1,0 +1,24 @@
+export const PEER_CONNECTIONS_STATE_STATUSES = {
+    NEW: 'new',
+    CONNECTING: 'connecting',
+    CONNECTED: "connected",
+    DISCONNECTED: "disconnected",
+    FAILED: "failed",
+    CLOSED: "closed",
+}
+
+export const DISCONNECTED_STATE_STATUSES = [
+    PEER_CONNECTIONS_STATE_STATUSES.FAILED,
+    PEER_CONNECTIONS_STATE_STATUSES.CLOSED,
+    PEER_CONNECTIONS_STATE_STATUSES.DISCONNECTED
+]
+
+export const DATA_CHANNELS_MESSAGE_TYPE = {
+    DATA_CHANEL_TEXT_MESSAGE: '1',
+    DATA_CHANEL_UPDATE_MEDIA_TRACK_STATE: '2',
+}
+
+export const MEDIA_TRACK_KIND = {
+    'AUDIO': 'audio',
+    'VIDEO': 'video'
+}

@@ -1,10 +1,10 @@
 import {ref} from 'vue'
 import {meetApi} from "@/api/meetApi";
+import {createGlobalState, createSharedComposable} from "@vueuse/core";
 
-const meetsList = ref([])
+export const useMeetsListStore = createGlobalState(() => {
 
-export const useMeetsListStore = () => {
-
+    const meetsList = ref([])
     const fetchMeetsList = async () => {
         const {data} = await meetApi.getMeetList()
 
@@ -15,4 +15,4 @@ export const useMeetsListStore = () => {
         fetchMeetsList,
         meetsList,
     }
-}
+})

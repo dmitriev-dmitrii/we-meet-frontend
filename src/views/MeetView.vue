@@ -23,7 +23,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const {fetchIceServers} = useWebRtcStore()
+
 
     const {
       currentMeet,
@@ -46,7 +46,7 @@ export default defineComponent({
       } catch (e) {
         await router.push({name: 'ErrorView'})
       } finally {
-        await fetchIceServers()
+
       }
 
 

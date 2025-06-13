@@ -31,7 +31,7 @@ app.mount('#app')
 //
 // import {
 //     WEB_SOCKET_EVENTS,
-// } from "./constants/constants.js";
+// } from "./constants/constants.ts";
 // import {meetStore} from "@/store/meetStore.ts";
 // import {APP_STEPS, useAppSteps} from "@/components/appSteps/useAppSteps.js";
 // import {webRtcStore} from "@/store/webRtcStore";

@@ -1,7 +1,12 @@
-import {dataChannels} from "@/store/webRtcStore";
-import {BUS_EVENTS, DATA_CHANNELS_MESSAGE_TYPE} from "@/constants/constants.js";
+import {useWebRtcStore} from "../../store/webRtcStore.ts";
+
+const {dataChannels} = useWebRtcStore()
+
+import {BUS_EVENTS} from "@/constants/constants.ts";
 import {localUserStore} from "@/store/localUserStore";
 import {useEventBus} from "@/features/useEventBus.js";
+import {DATA_CHANNELS_MESSAGE_TYPE} from "../../constants/constants-web-rtc.ts";
+
 
 
 export const useWebRtcDataChannels = () => {

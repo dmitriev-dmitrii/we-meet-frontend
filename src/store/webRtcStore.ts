@@ -1,55 +1,38 @@
 import {usersApi} from "@/api/usersApi.ts";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
+import {createGlobalState} from "@vueuse/core";
 
+export const useWebRtcStore = createGlobalState(() => {
 
-export const peerConnections = {};
-export const dataChannels = {};
-export const mediaStreams = {};
+    const peerConnections = reactive({});
+    const dataChannels =  reactive({});
+    const remoteMediaStreams =  reactive({});
 
-const fetchIceServers = async () => {
-    try {
-        const {data} = await usersApi.getIceServers()
-
-        webRtcStore.iceServers = data
-
-    } catch (err) {
-        console.log('upd err ' , err)
-    }
-}
-
-export const webRtcStore = {
-    peerConnections,
-    dataChannels,
-    mediaStreams,
-    iceServers: [],
-    fetchIceServers,
-}
-window.webRtcStore = webRtcStore
-
-
-const  iceServers = ref([])
-
-export const useWebRtcStore = ()=> {
-
+    const iceServers = ref([])
     const fetchIceServers = async () => {
         try {
 
-            if (iceServers.value.length ) {
-                return
+            if (iceServers.value.length) {
+                return iceServers.value
             }
 
             const {data} = await usersApi.getIceServers()
 
             iceServers.value = data
 
+            return data
+
         } catch (err) {
-            console.log('fetchIceServers err ' , err)
+            console.log('fetchIceServers err ', err)
         }
     }
 
 
     return {
+        peerConnections,
+        dataChannels,
+        remoteMediaStreams,
         fetchIceServers,
         iceServers
     }
-}
+})

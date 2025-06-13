@@ -1,6 +1,6 @@
 <template>
   ErrorView
-  <RouterLink to="/"/>
+  <RouterLink to="/"> home </RouterLink>>
 </template>
 
 <script>

@@ -1,39 +1,41 @@
-import {mediaStreams, peerConnections} from "@/store/webRtcStore";
 import {localUserStore} from "@/store/localUserStore";
-import {BUS_EVENTS} from "@/constants/constants.js";
+import {BUS_EVENTS} from "@/constants/constants.ts";
 import {useEventBus} from "@/features/useEventBus.js";
-import {createSharedComposable} from "@/utils/sharedComposable.js";
+import {useWebRtcStore} from "../../store/webRtcStore.ts";
+import {useLocalUserStore} from "../../store/localUserStore.ts";
+import {unref} from "vue";
 
-export const useWebRtcMediaStreams = createSharedComposable(() => {
+const {remoteMediaStreams, peerConnections} = useWebRtcStore()
+const {localUserStreams} =  useLocalUserStore()
+export const useWebRtcMediaStreams = () => {
 
     const {dispatchEvent} = useEventBus()
     const setupMediaStreamToPeer = async ({remoteUserId}) => {
 
         if (localUserStore.userStreams?.active) {
             localUserStore.userStreams.getTracks().forEach(track => {
-                peerConnections[remoteUserId].addTrack(track, localUserStore.userStreams)
+                peerConnections[remoteUserId].addTrack(track, unref(localUserStreams))
             });
         }
 
         peerConnections[remoteUserId].ontrack = function (e) {
 
-            mediaStreams[remoteUserId] = {
-                ...mediaStreams[remoteUserId],
+            remoteMediaStreams[remoteUserId] = {
+                ...remoteMediaStreams[remoteUserId],
                 ...{[e.track.kind]: e}
             }
 
             dispatchEvent(BUS_EVENTS.UPDATE_REMOTE_USER_MEDIA_STREAM_TRACK, {remoteUserId})
         }
 
-
     }
 
     const deleteMediaStream = (remoteUserId) => {
-        delete mediaStreams[remoteUserId]
+        delete remoteMediaStreams[remoteUserId]
     }
 
     return {
         deleteMediaStream,
         setupMediaStreamToPeer,
     }
-})
+}

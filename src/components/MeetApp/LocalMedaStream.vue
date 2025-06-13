@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex;flex-direction: column">
 
-    <video autoplay muted ref="videoTagElement"></video>
+    <video autoplay muted ref="videoTagElement" style="height: 300px"></video>
 
     <label>
       audio

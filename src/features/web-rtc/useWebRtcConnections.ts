@@ -1,20 +1,24 @@
-import {useWebSocket} from "../useWebSocket";
-import {peerConnections} from "@/store/webRtcStore";
+
 import {useWebRtcDataChannels} from "./useWebRtcDataChannels";
 import {useWebRtcMediaStreams} from "./useWebRtcMediaStreams";
 import {useLocalUserStore} from "@/store/localUserStore";
 import {useEventBus} from "@/features/useEventBus.js";
-import {BUS_EVENTS, WEB_SOCKET_EVENTS} from "@/constants/constants.js";
+import {BUS_EVENTS} from "@/constants/constants.ts";
 import {unref} from "vue";
+import {WEB_SOCKET_EVENTS} from "../../constants/constants-web-socket.ts";
+import {useWebRtcStore} from "../../store/webRtcStore.ts";
+import {useWebSocket} from "../useWebSocket.ts";
+
+const {sendWebSocketMessage} = useWebSocket()
+const {setupDataChanelEvents} = useWebRtcDataChannels()
+const {setupMediaStreamToPeer} = useWebRtcMediaStreams()
+
+
+const {dispatchEvent} = useEventBus()
+const {localUser} = useLocalUserStore()
+const {iceServers,peerConnections} = useWebRtcStore()
 
 export const useWebRtcConnections = () => {
-
-    const {setupDataChanelEvents} = useWebRtcDataChannels()
-    const {setupMediaStreamToPeer} = useWebRtcMediaStreams()
-    const {dispatchEvent} = useEventBus()
-    const {sendWebSocketMessage} = useWebSocket()
-    const {localUser} = useLocalUserStore()
-
     const dispatchUpdatePeerStatus = (remoteUserId) => {
 
         const status = peerConnections[remoteUserId]?.connectionState
@@ -33,7 +37,7 @@ export const useWebRtcConnections = () => {
         try {
 
             peerConnections[remoteUserId] = new RTCPeerConnection({
-                iceServers: webRtcStore.iceServers,
+                iceServers: unref(iceServers),
             });
 
             dispatchUpdatePeerStatus(remoteUserId)
@@ -99,7 +103,6 @@ export const useWebRtcConnections = () => {
     const createPeerOffer = async ({fromUser}) => {
         try {
 
-
             const {
                 userId: remoteUserId
             } = fromUser
@@ -132,9 +135,14 @@ export const useWebRtcConnections = () => {
 
     const confirmPeerOffer = async ({fromUser, data}) => {
         try {
+
+
+
             const {
                 userId: remoteUserId
             } = fromUser
+
+            console.log(remoteUserId)
 
             await createPeerConnection(fromUser)
 

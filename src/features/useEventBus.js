@@ -1,5 +1,6 @@
-import {BUS_EVENTS} from "@/constants/constants.js";
-import {createSharedComposable} from "@/utils/sharedComposable.js";
+import {BUS_EVENTS} from "@/constants/constants";
+import {createSharedComposable} from "@vueuse/core";
+
 
 class EventBus extends HTMLElement {
     constructor() {
