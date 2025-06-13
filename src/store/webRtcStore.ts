@@ -1,4 +1,4 @@
-import {usersApi} from "@/api/usersApi.js";
+import {usersApi} from "@/api/usersApi.ts";
 import {ref} from "vue";
 
 
@@ -29,7 +29,7 @@ window.webRtcStore = webRtcStore
 
 const  iceServers = ref([])
 
-export const useWebRtcStore = ()=>{
+export const useWebRtcStore = ()=> {
 
     const fetchIceServers = async () => {
         try {

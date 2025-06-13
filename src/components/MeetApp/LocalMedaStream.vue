@@ -18,7 +18,7 @@
 
 <script>
 import {defineComponent, onMounted, unref, useTemplateRef, watch} from 'vue'
-import {localUserStore, useLocalUserStore} from "@/store/localUserStore.js";
+import {localUserStore, useLocalUserStore} from "@/store/localUserStore";
 
 export default defineComponent({
   name: "LocalMedaStream",

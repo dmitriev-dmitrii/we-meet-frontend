@@ -17,8 +17,8 @@
 <script>
 
     import {BUS_EVENTS, DATA_CHANNELS_MESSAGE_TYPE} from "@/constants/constants.js";
-    import {localUserStore} from "@/store/localUserStore.js";
-    import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels.js";
+    import {localUserStore} from "@/store/localUserStore";
+    import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels";
     import {useEventBus} from "@/features/useEventBus.js";
     const {listenEvent} = useEventBus()
     const formTag = this.querySelector('form');

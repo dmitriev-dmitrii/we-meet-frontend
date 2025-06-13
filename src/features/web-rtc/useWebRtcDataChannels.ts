@@ -1,6 +1,6 @@
-import {dataChannels} from "@/store/webRtcStore.js";
+import {dataChannels} from "@/store/webRtcStore";
 import {BUS_EVENTS, DATA_CHANNELS_MESSAGE_TYPE} from "@/constants/constants.js";
-import {localUserStore} from "@/store/localUserStore.js";
+import {localUserStore} from "@/store/localUserStore";
 import {useEventBus} from "@/features/useEventBus.js";
 
 
@@ -34,6 +34,7 @@ export const useWebRtcDataChannels = () => {
         }
 
         channel.onopen = async (e) => {
+            console.log('channel.onopen')
             dispatchEvent(BUS_EVENTS.DATA_CHANEL_OPEN, { remoteUserId  , remoteUserName })
             localUserStore.sendMediaTrackLocalState()
         }

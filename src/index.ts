@@ -27,15 +27,15 @@ app.mount('#app')
 // import  "@/components/appSteps/meetStep/mediaStreams/remote-media-stream.component.html";
 //
 // import { useWebSocket } from "./features/useWebSocket.ts";
-// import {useWebRtcConnections} from "./features/web-rtc/useWebRtcConnections.js";
+// import {useWebRtcConnections} from "./features/web-rtc/useWebRtcConnections.ts";
 //
 // import {
 //     WEB_SOCKET_EVENTS,
 // } from "./constants/constants.js";
-// import {meetStore} from "@/store/meetStore.js";
+// import {meetStore} from "@/store/meetStore.ts";
 // import {APP_STEPS, useAppSteps} from "@/components/appSteps/useAppSteps.js";
-// import {webRtcStore} from "@/store/webRtcStore.js";
-// import {localUserStore} from "@/store/localUserStore.js";
+// import {webRtcStore} from "@/store/webRtcStore";
+// import {localUserStore} from "@/store/localUserStore";
 //
 // const {setupOnWsMessageCallbacks} = useWebSocket()
 //

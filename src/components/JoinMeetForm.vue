@@ -15,7 +15,7 @@
 
 <script>
 import {defineComponent, ref, unref} from 'vue'
-import {useCurrentMeetStore} from "@/store/meetStore.js";
+import {useCurrentMeetStore} from "@/store/meetStore";
 
 
 export default defineComponent({

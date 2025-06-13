@@ -13,7 +13,9 @@ export default defineComponent({
   components: {LocalMedaStream},
   setup() {
 
-    return {}
+    return {
+
+    }
   }
 })
 </script>

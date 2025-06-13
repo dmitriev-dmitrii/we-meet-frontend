@@ -1,6 +1,6 @@
-import {usersApi} from "@/api/usersApi.js";
+import {usersApi} from "@/api/usersApi.ts";
 import {BUS_EVENTS, DATA_CHANNELS_MESSAGE_TYPE} from "@/constants/constants.js";
-import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels.js";
+import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels.ts";
 import {useEventBus} from "@/features/useEventBus.js";
 import {reactive, shallowRef, unref, watch} from "vue";
 
@@ -30,7 +30,7 @@ watch(localUserMediaState , ({audio,video})=> {
         }).enabled = video
 
 
-        // отправить всем участникам мита состояние медиа треков
+        // отправить всем участникам мита состояние медиа треков по дата каналу
         const payload = {
             type: DATA_CHANNELS_MESSAGE_TYPE.DATA_CHANEL_UPDATE_MEDIA_TRACK_STATE,
             data: {

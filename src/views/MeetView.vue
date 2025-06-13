@@ -9,7 +9,7 @@
 <script>
 import {defineComponent, onMounted, unref} from 'vue'
 import {useRoute, useRouter} from "vue-router";
-import {useCurrentMeetStore} from "@/store/meetStore.js";
+import {useCurrentMeetStore} from "@/store/meetStore";
 import JoinMeetForm from "@/components/JoinMeetForm.vue";
 import MeetApp from "@/components/MeetApp/MeetApp.vue";
 import {useWebRtcStore} from "@/store/webRtcStore.js";

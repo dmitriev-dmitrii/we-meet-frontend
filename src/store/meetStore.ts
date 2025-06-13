@@ -1,15 +1,14 @@
 import {meetApi} from "@/api/meetApi.js";
-import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels.js";
-import {localUserStore, useLocalUserStore} from "@/store/localUserStore.js";
+import {useWebRtcDataChannels} from "@/features/web-rtc/useWebRtcDataChannels.ts";
+import {localUserStore, useLocalUserStore} from "@/store/localUserStore";
 
-import {useWebRtcMediaStreams} from "@/features/web-rtc/useWebRtcMediaStreams.js";
-import {useWebRtcConnections} from "@/features/web-rtc/useWebRtcConnections.js";
-import {peerConnections} from "@/store/webRtcStore.js";
-import {reactive, unref} from "vue";
+import {useWebRtcMediaStreams} from "@/features/web-rtc/useWebRtcMediaStreams.ts";
+
+import {peerConnections} from "@/store/webRtcStore";
+import {reactive, ref, unref} from "vue";
+import {useWebRtcConnections} from "../features/web-rtc/useWebRtcConnections.ts";
 
 const {sendMeOffer} = useWebRtcConnections()
-
-// const {closeWebSocket, connectToWebSocket} = useWebSocket()
 
 const {
     closeDataChanel
@@ -50,7 +49,6 @@ const joinMeet = async () => {
 
         const {data} = await meetApi.joinMeetRequest({meetId, userId})
 
-        // await connectToWebSocket()
         await sendMeOffer()
 
         const currentUrl = new URL(window.location.href);
@@ -105,6 +103,8 @@ const currentMeet = reactive({
     ownerUserId: ''
     //TODO readonly export
 })
+
+const meetUsers = ref({})
 
 export const useCurrentMeetStore = () => {
 
@@ -169,6 +169,7 @@ export const useCurrentMeetStore = () => {
         joinMeet,
         findMeetById,
         currentMeet,
-        createMeet
+        createMeet,
+        removeUserFromMeet,
     }
 }

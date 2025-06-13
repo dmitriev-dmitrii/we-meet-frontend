@@ -1,12 +1,11 @@
 import {useWebSocket} from "../useWebSocket";
-import {peerConnections} from "@/store/webRtcStore.js";
-import {useWebRtcDataChannels} from "./useWebRtcDataChannels.js";
-import {useWebRtcMediaStreams} from "./useWebRtcMediaStreams.js";
-import { useLocalUserStore} from "@/store/localUserStore.js";
+import {peerConnections} from "@/store/webRtcStore";
+import {useWebRtcDataChannels} from "./useWebRtcDataChannels";
+import {useWebRtcMediaStreams} from "./useWebRtcMediaStreams";
+import {useLocalUserStore} from "@/store/localUserStore";
 import {useEventBus} from "@/features/useEventBus.js";
 import {BUS_EVENTS, WEB_SOCKET_EVENTS} from "@/constants/constants.js";
 import {unref} from "vue";
-
 
 export const useWebRtcConnections = () => {
 
