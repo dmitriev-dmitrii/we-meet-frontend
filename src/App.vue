@@ -10,7 +10,7 @@
 
 <script  lang="ts">
 import {defineComponent, onMounted, unref} from "vue";
-import {useWebSocket} from './features/useWebSocket'
+import {useWebSocket} from './features/web-rtc/useWebSocket.ts'
 import {useWebRtcConnections} from "./features/web-rtc/useWebRtcConnections.ts";
 import {WEB_SOCKET_EVENTS} from "./constants/constants-web-socket.ts";
 

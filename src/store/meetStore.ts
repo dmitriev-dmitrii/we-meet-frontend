@@ -6,12 +6,15 @@ import {useWebRtcStore} from "./webRtcStore";
 import {createGlobalState} from "@vueuse/core";
 import {useWebRtcDataChannels} from "../features/web-rtc/useWebRtcDataChannels.ts";
 import {useWebRtcMediaStreams} from "../features/web-rtc/useWebRtcMediaStreams.ts";
+import {useWebSocket} from "../features/web-rtc/useWebSocket.ts";
+
 export const useCurrentMeetStore = createGlobalState(() => {
 
     const {fetchIceServers} = useWebRtcStore()
     const {sendMeOffer, closePeerConnection} = useWebRtcConnections()
     const {closeDataChanel} = useWebRtcDataChannels()
     const {deleteMediaStream} = useWebRtcMediaStreams()
+    const {connectToWebSocket} = useWebSocket()
 
     const {
         localUserAuth,
@@ -56,7 +59,6 @@ export const useCurrentMeetStore = createGlobalState(() => {
         }
     }
 
-
     const joinMeet = async () => {
         try {
 
@@ -68,6 +70,7 @@ export const useCurrentMeetStore = createGlobalState(() => {
             const {data} = await meetApi.joinMeetRequest({meetId, userId, userName})
 
             await fetchIceServers()
+            await connectToWebSocket({meetId, userId})
             await sendMeOffer()
 
         } catch (e) {

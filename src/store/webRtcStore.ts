@@ -4,9 +4,9 @@ import {createGlobalState} from "@vueuse/core";
 
 export const useWebRtcStore = createGlobalState(() => {
 
-    const peerConnections = reactive({});
-    const dataChannels =  reactive({});
-    const remoteMediaStreams =  reactive({});
+    const peerConnections = {}
+    const dataChannels =  {}
+    const remoteMediaStreams =  {}
 
     const iceServers = ref([])
     const fetchIceServers = async () => {

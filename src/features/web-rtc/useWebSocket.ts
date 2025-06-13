@@ -3,12 +3,8 @@ const WEB_SOCKET_URL = import.meta.env.VITE_WE_MEET_API_URL;
 
 const onMessageHandlers = new Map()
 
-// const {localUser} = useLocalUserStore()
-// const {currentMeet} = useCurrentMeetStore()
+let ws = undefined
 export const useWebSocket =  () => {
-
-    let ws = undefined
-
     const sendWebSocketMessage = (payload) => {
         ws.send(JSON.stringify(payload))
     }
@@ -27,15 +23,11 @@ export const useWebSocket =  () => {
     }
 
 
-    const connectToWebSocket = async () => {
+    const connectToWebSocket = async ({userId , meetId}) => {
 
         return new Promise((resolve, reject) => {
 
-          // const {userId} =  unref(localUser)
-          // const {meetId} = unref(currentMeet)
-
-            // ws = new WebSocket(`${WEB_SOCKET_URL}?userId=${userId}&meetId=${meetId}`);
-            ws = new WebSocket(`${WEB_SOCKET_URL}`);
+            ws = new WebSocket(`${WEB_SOCKET_URL}?userId=${userId}&meetId=${meetId}`);
 
             ws.onmessage = async (event) => {
                 const payload = JSON.parse(event.data);

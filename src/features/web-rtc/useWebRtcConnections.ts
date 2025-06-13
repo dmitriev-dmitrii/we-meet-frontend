@@ -7,7 +7,7 @@ import {BUS_EVENTS} from "@/constants/constants.ts";
 import {unref} from "vue";
 import {WEB_SOCKET_EVENTS} from "../../constants/constants-web-socket.ts";
 import {useWebRtcStore} from "../../store/webRtcStore.ts";
-import {useWebSocket} from "../useWebSocket.ts";
+import {useWebSocket} from "./useWebSocket.ts";
 
 const {sendWebSocketMessage} = useWebSocket()
 const {setupDataChanelEvents} = useWebRtcDataChannels()
@@ -141,8 +141,6 @@ export const useWebRtcConnections = () => {
             const {
                 userId: remoteUserId
             } = fromUser
-
-            console.log(remoteUserId)
 
             await createPeerConnection(fromUser)
 
