@@ -5,17 +5,17 @@
     <input  v-model="meetPassword">
   </label>
 
-  <button type="submit"  v-if="!meetId">
+  <UiButton :disabled="true" size="large" type="submit" v-if="!meetId" theme="">
     create meet
-  </button>
+  </UiButton>
 
-  <button type="button" @click="copyMeetHref" v-if="meetId">
+  <UiButton type="button" @click="copyMeetHref" v-if="meetId">
     copy meet link
-  </button>
+  </UiButton>
 
-  <button type="button" @click="toMeet" v-if="meetId">
+  <UiButton type="button" @click="toMeet" v-if="meetId">
     to meet =>
-  </button>
+  </UiButton>
 </form>
 
 
@@ -26,9 +26,11 @@ import {defineComponent, ref, unref} from 'vue'
 import {useMeetStore} from "@/store/meetStore.js";
 
 import {useRouter} from "vue-router";
+import UiButton from "@/components/ui/UiButton.vue";
 
 export default defineComponent({
   name: "CreateMeetForm",
+  components: {UiButton},
   setup() {
     const {createMeet}= useMeetStore()
     const router = useRouter()
