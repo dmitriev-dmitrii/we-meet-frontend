@@ -91,12 +91,12 @@ export const useLocalUserStore = createGlobalState(() => {
     }
 
     const auth = async ({userName = ''} = {}) => {
-
+        console.log(userName)
         const {data} = await usersApi.userAuth({userName})
 
         localUserId.value = data.userId
         localUserName.value = data.userName
-
+        console.log(localUserName.value)
         return data
     }
 

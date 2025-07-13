@@ -1,9 +1,8 @@
 <template>
 
-  <div style="display: flex; flex-direction: column; border: 1px solid">
+  <div style="display: flex; flex-direction: column;">
 
     <video style="height: 200px;width: 200px" autoplay muted ref="localMedaStreamElement"></video>
-
 
 <!--    <label>-->
 <!--      <span>  videoInput </span>-->

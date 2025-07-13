@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;">
+  <div class="meet-app-layout" :class="mediaStreamLayoutClasses">
     <LocalMedaStream/>
     <RemoteMediaStream v-for="{ userId  , userName ,userAccentColor, peerStatus ,audio, video} in remoteMediaSteams"
                        :userAccentColor="userAccentColor"
@@ -25,7 +25,8 @@ import {useMeetStore} from "@/store/meetStore.js";
 
 export default defineComponent({
   name: "MeetApp",
-  components: {RemoteMediaStream, MeetChat, LocalMedaStream},
+  components: {
+    RemoteMediaStream, MeetChat, LocalMedaStream},
   setup() {
 
     const {remoteUsersMap} = useMeetStore()
@@ -35,15 +36,22 @@ export default defineComponent({
       return Object.values(unref(remoteUsersMap)).filter(Boolean)
     })
 
-
+    const mediaStreamLayoutClasses = computed(() => {
+      return {}
+    })
 
     return {
+      mediaStreamLayoutClasses,
       remoteMediaSteams
     }
   }
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.meet-app-layout {
+
+}
 
 </style>

@@ -1,31 +1,38 @@
 <template>
-  <form @submit.prevent=" onSubmitForm">
+  <fieldset :disabled="isLoading" class="form_wrapper">
 
-    <label> name
-      <input v-model="userName">
-    </label>
+    <form @submit.prevent=" onSubmitForm" class="form">
 
-    <label hidden> password
-      <input v-model="meetPassword">
-    </label>
+      <label>you name
+        <UiTextInput v-model="userName" placeholder="enter you name"/>
+      </label>
 
-    <button type="submit">
-      join
-    </button>
-  </form>
+      <span v-if="isPrivateMeet">
+        this meet is private - <label for="meet-password" class="form_password-label"> enter password </label>
+        <UiTextInput v-model="meetPassword" id="meet-password" placeholder="password"/>
+      </span>
 
+      <UiButton type="submit" theme="primary" :loading="isLoading">
+        join
+      </UiButton>
+
+    </form>
+  </fieldset>
 </template>
 
 <script>
 import {defineComponent, onMounted, ref, unref} from 'vue'
 import {useMeetStore} from "@/store/meetStore.js";
 import {useLocalUserStore} from "@/store/localUserStore.js";
+import UiButton from "@/components/ui/UiButton.vue";
+import UiTextInput from "@/components/ui/UiTextInput.vue";
 
 export default defineComponent({
   name: "JoinMeetForm",
+  components: {UiTextInput, UiButton},
   setup() {
     const {localUserName} = useLocalUserStore()
-    const {joinMeet} = useMeetStore()
+    const {joinMeet, isPrivateMeet} = useMeetStore()
     const meetPassword = ref('')
     const userName = ref('')
     const isLoading = ref(false)
@@ -48,11 +55,9 @@ export default defineComponent({
 
     }
 
-    onMounted(() => {
-      userName.value = unref(localUserName)
-    })
-
     return {
+      isPrivateMeet,
+      isLoading,
       userName,
       meetPassword,
       onSubmitForm
@@ -61,6 +66,31 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.form {
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  gap: 1rem;
+
+
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: none;
+  }
+
+  &_title {
+    text-align: center;
+  }
+
+  &_password-label {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
 
 </style>

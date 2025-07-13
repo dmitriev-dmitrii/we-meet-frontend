@@ -1,6 +1,8 @@
 <template>
 
-  <CreateMeetForm/>
+
+
+    <CreateMeetForm/>
 
 
 </template>
@@ -11,16 +13,14 @@ import CreateMeetForm from "@/components/CreateMeetForm.vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: {CreateMeetForm, },
+  components: {CreateMeetForm,},
   setup() {
 
-    return {
-
-    }
+    return {}
   }
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

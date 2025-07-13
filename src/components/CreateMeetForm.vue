@@ -1,57 +1,88 @@
 <template>
-<form @submit.prevent="onSubmitForm" style="display: flex;flex-direction: column">
+  <fieldset class="form_wrapper">
+    <legend class="form_title">
+      <h2> Lets create new meet </h2>
+    </legend>
 
-  <label v-if="!meetId" hidden> password
-    <input  v-model="meetPassword">
-  </label>
-
-  <button type="submit"  v-if="!meetId">
-    create meet
-  </button>
-
-  <button type="button" @click="copyMeetHref" v-if="meetId">
-    copy meet link
-  </button>
-
-  <button type="button" @click="toMeet" v-if="meetId">
-    to meet =>
-  </button>
-</form>
+    <form @submit.prevent="onSubmitForm" class="form">
 
 
+      <p v-if="!meetId"> if y want create private meet -
+        <label for="meet-password" class="form_password-label">
+          enter password
+        </label>
+      </p>
+
+      <UiTextInput v-if="!meetId" id="meet-password" v-model="meetPassword" placeholder="password"/>
+
+      <UiButton type="submit" v-if="!meetId" theme="primary" :loading="isLoading">
+        create meet
+      </UiButton>
+
+      <UiButton type="button" @click="copyMeetHref" v-if="meetId">
+        copy meet link
+      </UiButton>
+
+      <UiButton type="button" @click="toMeet" v-if="meetId" theme="primary">
+        to meet =>
+      </UiButton>
+    </form>
+
+  </fieldset>
 </template>
 
 <script>
-import {defineComponent, ref, unref} from 'vue'
+import {computed, defineComponent, ref, unref} from 'vue'
 import {useMeetStore} from "@/store/meetStore.js";
 
 import {useRouter} from "vue-router";
+import UiButton from "@/components/ui/UiButton.vue";
+import UiTextInput from "@/components/ui/UiTextInput.vue";
 
 export default defineComponent({
   name: "CreateMeetForm",
+  components: {UiButton, UiTextInput},
   setup() {
-    const {createMeet}= useMeetStore()
+    const {createMeet} = useMeetStore()
     const router = useRouter()
+
     const meetPassword = ref('')
     const meetId = ref('')
 
+    const isLoading = ref(false)
+
+    const currentMeetRoute = computed(() => {
+      return router.resolve({
+        name: 'MeetView',
+        params: {
+          meetId: unref(meetId)
+        }
+      })
+    })
+
     const copyMeetHref = async () => {
-      console.log('copyMeetHref', window.location.href)
+      await window.navigator.clipboard.writeText(window.location.origin + unref(currentMeetRoute).href)
     }
 
-    const toMeet = async ()=>{
-      await router.push( { name:'MeetView' , params:{meetId:unref(meetId)} })
+    const toMeet = async () => {
+      await router.push(unref(currentMeetRoute))
     }
 
     const onSubmitForm = async () => {
 
-     const res  =  await createMeet({password:unref(meetPassword)})
+      isLoading.value = true
 
-     meetId.value = res.meetId
+      const res = await createMeet({
+        password: unref(meetPassword)
+      })
 
+      meetId.value = res.meetId
+
+      isLoading.value = false
     }
 
     return {
+      isLoading,
       meetId,
       meetPassword,
       onSubmitForm,
@@ -62,6 +93,29 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  min-height: 15rem;
+  gap: 1rem;
+
+  &_wrapper {
+    border-radius: $base-border-radius;
+    border: .5px solid;
+  }
+
+  &_title {
+    text-align: center;
+  }
+
+  &_password-label {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+}
 </style>
