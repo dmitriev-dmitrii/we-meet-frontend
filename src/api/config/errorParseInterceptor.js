@@ -1,4 +1,7 @@
 export const errorParseInterceptor = (error) => {
+    console.log('e',error);
+
+    console.log(JSON.stringify(error));
 
     if (error?.response?.data) {
 
@@ -19,7 +22,7 @@ export const errorParseInterceptor = (error) => {
 
     return {
         status: '',
-        statusText: error.message || 'Unexpected Error',
-        message: 'Something wrong...'
+        statusText: 'Unexpected Error',
+        message: error.message
     }
 }
