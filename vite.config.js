@@ -7,7 +7,7 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
     const VITE_APP_DEV_PORT = 3003
 
     const isProdMode = mode === 'production'
-    const publicPath = isProdMode ? "/we-meet/" : "/"
+    const publicPath = "/"
 
     return {
         server: {

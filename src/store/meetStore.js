@@ -103,7 +103,7 @@ export const useMeetStore = createGlobalState(() => {
             await sendMeOffer()
 
         } catch (e) {
-
+            console.log(e)
             throw e
         }
 
